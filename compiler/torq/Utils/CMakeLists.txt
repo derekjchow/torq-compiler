@@ -35,5 +35,6 @@ iree_cc_library(
     MLIRIR
     iree::target::torq::Dialect::TorqHL::Dialect
     iree::target::torq::Dialect::TorqHW::Dialect
+    iree::target::torq::Codegen::css_bootstrap::torq_kernel_riscv
   PUBLIC
 )

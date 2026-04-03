@@ -31,8 +31,8 @@ set(IREE_TARGET_BACKEND_LLVM_CPU ON)
 set(IREE_HAL_DRIVER_DEFAULTS OFF)
 # enable our hal driver in the runtime
 set(IREE_EXTERNAL_HAL_DRIVERS torq)
-# disable the input pipeline for stableHLO which is not supported at the moment
-set(IREE_INPUT_STABLEHLO OFF)
+# enable the input pipeline for stableHLO
+set(IREE_INPUT_STABLEHLO ON)
 add_subdirectory(third_party/iree)
 
 # TODO change generate_embed_data to iree-c-embed-data after IREE upgrade

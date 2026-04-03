@@ -49,15 +49,24 @@ class SpecializeTransposeOpPattern : public OpRewritePattern<linalg::GenericOp> 
         if (!inputIndexingMap.isPermutation())
             return failure();
 
-        SmallVector<int64_t> perm;
+        // The input indexing map gives us: input_dim[i] = iter_dim[fwd[i]].
+        // linalg.transpose expects: result_dim[i] = input_dim[perm[i]],
+        // where the output map is identity (result_dim[i] = iter_dim[i]).
+        // So we need perm = inverse(fwd).
+        SmallVector<int64_t> fwd;
         for (auto dim : inputIndexingMap.getResults()) {
             if (auto dimExpr = dyn_cast<AffineDimExpr>(dim)) {
-                perm.push_back(dimExpr.getPosition());
+                fwd.push_back(dimExpr.getPosition());
             }
             else {
                 return failure();
             }
         }
+
+        // Compute the inverse permutation.
+        SmallVector<int64_t> perm(fwd.size());
+        for (size_t i = 0; i < fwd.size(); ++i)
+            perm[fwd[i]] = i;
 
         // Create a linalg.transpose replacing the generic.
         Value input = generic.getOperation()->getOperand(0);
