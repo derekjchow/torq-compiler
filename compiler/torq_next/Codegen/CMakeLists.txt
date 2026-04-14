@@ -1,0 +1,43 @@
+iree_tablegen_library(
+  NAME
+    PassesIncGen
+  TD_FILE
+    Passes.td
+  OUTS
+    --gen-pass-decls Passes.h.inc
+)
+
+iree_cc_library(
+  NAME
+    Codegen
+  HDRS
+    Passes.h
+    PassesDetail.h
+  SRCS
+    TorqNextLowerExecutableTargetPass.cpp
+    TileMatMulPass.cpp
+    InsertDMAPass.cpp
+    ResolveWorkgroupCountPass.cpp
+  DEPS
+    ::PassesIncGen
+    LLVMSupport
+    MLIRIR
+    MLIRArithDialect
+    MLIRBufferizationDialect
+    MLIRBufferizationPipelines
+    MLIRBufferizationTransforms
+    MLIRFunctionInterfaces
+    MLIRLinalgDialect
+    MLIRLinalgTransforms
+    MLIRMemRefDialect
+    MLIRPass
+    MLIRSCFDialect
+    MLIRSCFTransforms
+    MLIRTensorDialect
+    MLIRTransforms
+    iree::compiler::Dialect::Flow::IR
+    iree::compiler::Dialect::HAL::IR
+    iree::target::torq_next::Dialect::TorqNextHL::Dialect
+    iree::target::torq_next::Conversions::LinalgToTorqNextHL
+  PUBLIC
+)

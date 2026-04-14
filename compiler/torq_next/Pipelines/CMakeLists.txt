@@ -1,0 +1,13 @@
+iree_cc_library(
+  NAME
+    Pipelines
+  HDRS
+    Pipelines.h
+  SRCS
+    Pipelines.cpp
+  DEPS
+    MLIRSupport
+    MLIRPass
+    MLIRTransforms
+  PUBLIC
+)

@@ -1,0 +1,16 @@
+iree_cc_library(
+  NAME
+    Target
+  SRCS
+    "TorqNextTarget.cpp"
+  DEPS
+    LLVMSupport
+    MLIRIR
+    MLIRSupport
+    iree::compiler::Dialect::HAL::Target
+    iree::compiler::Codegen::Dialect::Codegen::IR::IREECodegenDialect
+    iree::compiler::Utils
+    iree::target::torq_next::Codegen
+    iree::target::torq_next::Dialect::TorqNextHL::Dialect
+  PUBLIC
+)
